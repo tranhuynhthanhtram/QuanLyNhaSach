@@ -1,0 +1,43 @@
+﻿@model QuanLyNhaSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Tạo tài khoản</h2>
+<table align="center">
+    @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Tên khách hàng</div>
+            @Html.TextBoxFor(m => m.TenKhachHang, "", new { @class = "form-control", @placeholder = "Tên khách hàng" })
+            @ViewData["LoiTenKH"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Email</div>
+            @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Email" })
+            @ViewData["LoiEmail"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Địa chỉ</div>
+            @Html.TextBoxFor(m => m.DiaChi, "", new { @class = "form-control", @placeholder = "Địa chỉ" })
+            @ViewData["LoiDiaChi"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">SĐT</div>
+            @Html.TextBoxFor(m => m.SĐT, "", new { @class = "form-control", @placeholder = "SĐT" })
+            @ViewData["LoiSĐT"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Mật khẩu</div>
+            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", @placeholder = "Mật khẩu" })
+            @ViewData["LoiMatKhau"]
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+       
+    }
+
+</table>

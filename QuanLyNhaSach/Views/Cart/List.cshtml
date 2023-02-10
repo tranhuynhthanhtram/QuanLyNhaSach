@@ -1,0 +1,81 @@
+﻿@model IEnumerable<QuanLyNhaSach.Models.Cart>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Giỏ hàng</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Mã sách
+        </th>
+        <th>
+           Tên sách
+        </th>
+        <th>
+            Giá tiền
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Anh)
+            </th>*@
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Thành tiền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSach)
+            </td>
+            <td>
+                @String.Format("{0:0,##0}", item.GiaTien)
+            </td>
+
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Anh)
+                </td>*@
+            <!--<td>
+                <img style="width:50px; height:50px" src="~/Images" />
+            </td>-->
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @String.Format("{0:0,##0}", item.ThanhTien)
+            </td>
+
+            <td>
+                <a href="@Url.Action("Details","Sach", new { id = item.MaSach })">Details </a>|
+                <a href="@Url.Action("AddCart","Cart", new { id = item.MaSach })">Add </a>|
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaSach })
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="2">Số lượng sản phẩm: @ViewBag.CountProduct</td>
+        <td colspan="2">Thành tiền: @String.Format("{0:0,##0}", ViewBag.Total) VNĐ</td>
+        <td colspan="2">@Html.ActionLink("Đặt hàng", "Order")</td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <form action="@Url.Action("Order", "Cart")" method="get">
+                Thông tin đặt hàng - Email: <input type="email" name="Email" />
+                <input type="submit" value="Đặt hàng" class="btn btn-success btn-sm" />
+                <a class="btn btn-success btn-sm" href="@Url.Action("Menu","Home")">Tiếp tục mua hàng</a>
+            </form>
+        </td>
+
+    </tr>
+</table>

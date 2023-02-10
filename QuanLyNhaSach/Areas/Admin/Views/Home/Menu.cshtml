@@ -1,0 +1,44 @@
+﻿@*@model IEnumerable<QuanLyNhaSach.Models.Sach>*@
+@model PagedList.IPagedList<QuanLyNhaSach.Models.Sach>
+@using PagedList.Mvc;
+<link rel="stylesheet" href="~/Content/PagedList.css" />
+
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <p></p>
+    <div class=" form-group form-inline">
+        Tìm sách: @Html.TextBox("Search", ViewBag.CurrentFilter as string, "", new { @class = "form-control" })
+        <input type="submit" class="btn btn-default" value="Search" />
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <a href="@Url.Action("Details", "Sach", new { id = item.MaSach })" style="text-decoration:none; color:black">
+                <div class="col-sm-3" style="padding:10px">
+                    <img class="card-img-top" src="~/Images/@item.Anh" alt=@item.TenSach style="height:375px">
+                    <h4 class="card-title">@item.TenSach</h4>
+                    <p class="card-text"> @String.Format("{0:0,##0}", item.GiaTien) VND</p>
+                    <a href="@Url.Action("AddCart","Cart", new {id=item.MaSach})" class="btn btn-primary">Đặt hàng</a>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+<div>
+    Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+    @Html.PagedListPager(Model, page=>Url.Action("Menu",
+    new
+    {
+        page,
+        currentFilter=ViewBag.CurrentFilter
+    }))
+</div>
+

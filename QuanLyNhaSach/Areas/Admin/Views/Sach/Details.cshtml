@@ -1,0 +1,112 @@
+﻿@model QuanLyNhaSach.Models.Sach
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết sách</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<div class="row">
+            <div class="col-sm-8">*@
+        <dt style="font-weight: bolder">
+            Tên sách
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenSach)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Giá tiền
+        </dt>
+
+        <dd>
+            @String.Format("{0:0,##0}", Model.GiaTien)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Năm xuất bản
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamXuatBan)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Số lượng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Tên loại sách
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiSach.TenLoaiSach)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Tên nhà xuất bản
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhaXuatBan.TenNXB)
+        </dd>
+
+        <dt style="font-weight: bolder">
+            Tên tác giả
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TacGia.TenTacGia)
+        </dd>
+        @*</div>*@
+        @*<div class="col-sm-4 right">*@
+        <dt style="font-weight: bolder">
+            Ảnh
+        </dt>
+
+        <dd>
+            <img style="width: 200px; height: 200px;" src="~/Images/@Model.Anh" />
+        </dd>
+        @*</div>*@
+        @*</div>*@
+
+
+    </dl>
+</div>
+
+
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.MaSach }) |
+    @Html.ActionLink("Quay lại", "List")
+</p>
+
+<h2>Sản phẩm bán chạy nhất</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var item in ViewBag.Sub)
+        {
+            <div class="col-md-3 col-xs-12" style="">
+                <div class="card" style="padding:5px">
+                    <div class="card-body">
+                        <img class="card-img-top" src="~/Images/@item.Anh" alt=@item.TenSach style="width:100%">
+                    </div>
+
+                    <div class="card-body">
+                        <a href="@Url.Action("Details", "Sach", new { id = item.MaSach })"><h4 class="card-title">@item.TenSach</h4></a>
+                        <p class="card-text">@item.GiaTien</p>
+                        <a href="@Url.Action("AddCart", "Cart", new { id = item.MaSach })" class="btn btn-primary">Đặt hàng</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

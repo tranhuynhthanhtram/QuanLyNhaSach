@@ -1,0 +1,37 @@
+﻿@model QuanLyNhaSach.Models.NhanVien
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+@ViewBag.ThongBao
+<table align="center">
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Tên nhân viên</div>
+            @Html.TextBoxFor(m => m.TenNhanVien, "", new { @class = "form-control", @placeholder = "Tên nhân viên" })
+            @ViewData["Loi1"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">SĐT</div>
+            @Html.TextBoxFor(m => m.SĐT, "", new { @class = "form-control", @placeholder = "SĐT" })
+            @ViewData["Loi2"]
+        </div>
+        <div class="form-group">
+            <div class="control-label col-md-2" style="font-weight: bolder">Mật khẩu</div>
+            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", @placeholder = "Mật khẩu" })
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a class="col-md-offset-1" href="@Url.Action("ResetPassword", "Home")">Đổi mật khẩu</a>
+    }
+
+</table>
+
+
+
+

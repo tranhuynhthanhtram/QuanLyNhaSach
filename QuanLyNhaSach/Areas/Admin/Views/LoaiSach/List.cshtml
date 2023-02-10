@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QuanLyNhaSach.Models.LoaiSach>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>DANH SÁCH LOẠI SÁCH</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới loại sách", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Mã sách
+        </th>
+        <th>
+            Tên loại sách
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaLoaiSach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenLoaiSach)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiSach }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MaLoaiSach })
+        </td>
+    </tr>
+}
+
+</table>

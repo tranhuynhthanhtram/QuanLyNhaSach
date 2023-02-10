@@ -1,0 +1,149 @@
+﻿@*@{
+        ViewBag.Title = "Payment";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Payment</h2>
+    <div class="content">
+        <div class="section group">
+            @if (Model.Count > 0)
+            {
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Mã sách</td>
+                                <td>Tên sách</td>
+                                <td>Ảnh</td>
+                                <td>Số lượng</td>
+                                <td>Giá tiền</td>
+                                <td>Thành tiền</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <td>item.Sach.MaSach</td>
+                                <td>item.Sach.TenSach</td>
+                                <td><img src="~/Images/@item.Sach.Anh"</td>
+                                <td><input type="number" class="number" da</td>
+                                <td>item.Sach.MaSach</td>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+        </div>
+    </div>*@
+
+
+@model IEnumerable<QuanLyNhaSach.Models.Cart>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>List</h2>
+<p>
+    @Html.ActionLink("Back to List", "Menu", "Home")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaSach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenSach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiaTien)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Anh)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThanhTien)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaTien)
+            </td>
+
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Anh)
+                </td>*@
+            <!--<td>
+                <img style="width:50px; height:50px" src="~/Images" />
+            </td>-->
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhTien)
+            </td>
+
+            <td>
+                <a href="@Url.Action("Details","Sach", new { id = item.MaSach })">Details </a>|
+                <a href="@Url.Action("AddCart","Cart", new { id = item.MaSach })">Add </a>|
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaSach })
+
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="2">Số lượng sản phẩm: @ViewBag.CountProduct</td>
+        <td colspan="2">Thành tiền: @String.Format("{0:0.00}", ViewBag.Total) VNĐ</td>
+        <td colspan="2">@Html.ActionLink("Đặt hàng", "OrderProduct")</td>
+    </tr>
+    @*<tr>
+        <td colspan="6">
+            <form action="@Url.Action("Order", "Cart")" method="get">
+                Thông tin đặt hàng - Email: <input type="email" name="Email" />
+                - Điện thoại: <input type="text" name="Phone" />
+                <input type="submit" value="Đặt hàng" class="btn btn-success btn-sm" />
+                <a class="btn btn-success btn-sm" href="@Url.Action("Menu","Home")">Tiếp tục mua hàng</a>
+            </form>
+        </td>
+
+    </tr>*@
+ 
+<div class="row">
+    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Tên</label>
+            <input name="name" required class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Địa chỉ</label>
+            <input name="address" required class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>SĐT</label>
+            <input name="phone" class="form-control" required maxlength="11" minlength="9" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required class="form-control" />
+        </div>
+        <button type="submit" class="btn">Gửi đơn hàng</button>
+    }
+</div>
+
+</table>
+

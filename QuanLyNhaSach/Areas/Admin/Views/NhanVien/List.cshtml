@@ -1,0 +1,51 @@
+﻿@model IEnumerable<QuanLyNhaSach.Models.NhanVien>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h2>Danh sách nhân viên</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới nhân viên", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Tên nhân viên
+        </th>
+        <th>
+            SĐT
+        </th>
+        <th>
+            Ngày vào làm
+        </th>
+        <th>
+            Mật khẩu
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenNhanVien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SĐT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayVaoLam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatKhau)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaNhanVien }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaNhanVien })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,105 @@
+﻿@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Public/css/LayoutAdmin.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <section class="header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="@Url.Action("Menu","Home")">NHÀ SÁCH</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active">@Html.ActionLink("Menu", "Menu", "Home")</li>
+                        <li>@Html.ActionLink("Giỏ hàng", "List", "Cart")</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (Session["TenKhachHang"] != null)
+                        {
+                            <li><a href="@Url.Action("Logout","Home")"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Login","Home")"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                        }
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <section class="maincontent">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </section>
+
+    @*<section class="footer bg-info">
+            <div class="container-fluid text-center bg-dark py-4 text-light ">
+                Thiết kế bởi : Trần Huỳnh Thanh Trâm
+            </div>
+        </section>*@
+<div class="container">
+    <div class="jumbotron">
+        <h2>Quản lý nhà sách</h2>
+        <p>Trần Huỳnh Thanh Trâm &copy; 2022</p>
+    </div>
+</div>
+   
+
+</body>
+</html>
+

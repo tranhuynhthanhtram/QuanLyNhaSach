@@ -1,0 +1,80 @@
+﻿@model QuanLyNhaSach.Models.Sach
+
+<link rel="stylesheet" href="~/Content/PagedList.css" />
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Chi tiết sách</h2>
+<br />
+<div class="row container">
+    <div class="col-md-6 col-xs-12" style="padding-left: 200px">
+        <img style="width: 300px; height: 400px;" src="~/Images/@Model.Anh" />
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <h3><strong>Tên sách: </strong></h3>
+        <h3><strong>Tên tác giả: </strong>@Model.TacGia.TenTacGia</h3>
+        <h3><strong>Tên loại sách: </strong>@Model.LoaiSach.TenLoaiSach</h3>
+        <h3><strong>Nhà xuất bản: </strong> @Model.NhaXuatBan.TenNXB</h3>
+        <h3><strong>Năm xuất bản: </strong> @Model.NamXuatBan</h3>
+        <h3><strong>Giá tiền: </strong>@String.Format("{0:0,##0}", Model.GiaTien) VND</h3>
+        <a href="@Url.Action("AddCart","Cart", new {id=Model.MaSach})" class="btn btn-primary">Đặt hàng</a>
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("Details", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <h2>Bình luận</h2>
+        <input class="form-control" type="text" name="Comment" value="" style="width: 100%; height: 100px; margin-top: 10px" />
+        @*@Html.TextBox("Comment", "", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; height: 100px; margin-top: 10px" } })*@
+
+        <br />
+        @*<input type="submit" value="PostComment" class="btn btn-success" />*@
+        @*<input type="submit" value="Submit" class="btn btn-success" style="margin-top: 10px"></input>*@
+        <input type="submit" class="btn btn-default" value="Submit" id="@Model.MaSach" />
+        @*<a href="@Url.Action("Details","Home", new {id=Model.MaSach})" class="btn btn-primary">Submit</a>*@
+    </div>
+
+    <br />
+
+    <div class="row comment container" style="padding-left:100px">
+        @foreach (var item in Model.BinhLuans)
+        {
+            <div class="col-md-1 col-xs-4">
+                <h5><strong>@item.KhachHang.TenKhachHang</strong></h5>
+            </div>
+            <div class="col-md-11 col-xs-8">
+                <p>@item.NoiDungBinhLuan</p>
+                <p><em>@item.NgayBinhLuan</em></p>
+            </div>
+
+
+        }
+    </div>
+}
+
+
+<h2>Sản phẩm bán chạy nhất</h2>
+<br />
+<div class="container">
+    <div class="row">
+        @foreach (var item in ViewBag.Sub)
+        {
+
+            <a href="@Url.Action("Details", "Home", new { id = item.MaSach })" style="text-decoration:none; color:black">
+                <div class="col-sm-4" style="padding-left:75px">
+                    <img class="card-img-top" src="~/Images/@item.Anh" alt=@item.TenSach style="height:375px">
+                    <h4 class="card-title">@item.TenSach</h4>
+                    <p class="card-text"> @String.Format("{0:0,##0}", item.GiaTien) VND</p>
+                    <a href="@Url.Action("AddCart","Cart", new {id=item.MaSach})" class="btn btn-primary">Đặt hàng</a>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+<br />
+

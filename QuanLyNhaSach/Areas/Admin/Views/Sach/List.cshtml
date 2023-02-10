@@ -1,0 +1,104 @@
+﻿@*@model IEnumerable<QuanLyNhaSach.Models.Sach>*@
+@model PagedList.IPagedList<QuanLyNhaSach.Models.Sach>
+@using PagedList.Mvc;
+<link rel="stylesheet" href="~/Content/PagedList.css" />
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <h2>DANH SÁCH </h2>
+
+   
+<div class="container">
+
+    <ul>
+        <a href="@Url.Action("Create","Sach")" class="btn btn-success ">Thêm sách</a>
+        <a href="" id="btnExportPdf" class="btn btn-success navbar-right">Export PDF</a>
+    </ul>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Mã sách</th>
+        <th>
+            @Html.ActionLink("Tên sách", "List", new { orderSort = ViewBag.SortName })
+        </th>
+        <th>
+            @Html.ActionLink("Giá tiền", "List", new { orderSort = ViewBag.SortPrice })
+        </th>
+        <th>Năm xuất bản</th>
+        <th>Ảnh</th>
+        <th>Số lượng</th>
+        <th>Tên loại sách</th>
+        <th>Tên nhà xuất bản</th>
+        <th>Tên tác giả</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSach)
+            </td>
+            <td>
+                @String.Format("{0:0,##0}", item.GiaTien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NamXuatBan)
+                @*</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Anh)
+                    </td>*@
+            <td>
+                <img style="width:50px; height:50px" src="~/Images/@item.Anh" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiSach.TenLoaiSach)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhaXuatBan.TenNXB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TacGia.TenTacGia)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaSach }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaSach }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaSach })
+            </td>
+        </tr>
+        }
+
+    </table>
+    <div>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("List",
+            new
+            {
+                page,
+                orderSort = ViewBag.CurrentSort
+            }))
+    </div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#btnExportPdf').on('click', function () {
+                $.get("/Sach/ExportPdf", function (resp) {
+                    location.href = "/File/" + resp;
+                });
+            });
+        });
+    </script>
+    }
+
+
+

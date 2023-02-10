@@ -1,0 +1,37 @@
+﻿@model IEnumerable<QuanLyNhaSach.Models.Sach>
+
+<table style="width: 100%">
+    <thead>
+        <tr>
+            <th style="width:150px">Mã sách</th>
+            <th style="width:150px">Tên sách</th>
+            <th style="width:150px">Số lượng</th>
+            <th style="width:150px">Tác giả</th>
+            <th style="width:150px">Giá tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaSach)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenSach)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TacGia.TenTacGia)
+                </td>
+                <td>
+                    @String.Format("{0:0,##0}", item.GiaTien)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
